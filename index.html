@@ -14,27 +14,22 @@
             align-items: center;
             height: 100vh;
             background: linear-gradient(to bottom right, #FF9678, #FF8895);
-            font-family: Arial, sans-serif;
+            font-family: Roboto, sans-serif;
             color: #ffffff;
             text-align: center;
             overflow: hidden;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
-        /* Container for message */
-        .container {
-            max-width: 600px;
-            padding: 30px;
-            background-color: rgba(0, 0, 0, 0.1); /* Slightly transparent box */
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Vibrating glowing background effect */
+        /* Central pulsating glow effect */
         .glow-background {
             position: absolute;
-            width: 800px; /* Large glowing effect */
-            height: 800px;
+            width: 700px;
+            height: 700px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: radial-gradient(circle, rgba(255, 240, 180, 0.9) 10%, rgba(255, 200, 100, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
             border-radius: 50%;
             z-index: -1;
@@ -43,12 +38,64 @@
         }
 
         @keyframes glowPulse {
-            0% { transform: scale(1); opacity: 0.9; filter: blur(80px); }
-            100% { transform: scale(1.2); opacity: 0.6; filter: blur(120px); }
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; filter: blur(80px); }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; filter: blur(120px); }
+        }
+
+        /* Floating balls animation */
+        @keyframes move {
+            100% { transform: translate3d(0, 0, 1px) rotate(360deg); }
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -2;
+        }
+
+        /* Animated floating balls with soft glow */
+        .ball {
+            position: absolute;
+            width: 15vmin;
+            height: 15vmin;
+            border-radius: 50%;
+            animation: move linear infinite;
+            opacity: 0.7;
+            filter: blur(25px);
+            box-shadow: 0 0 50px rgba(255, 240, 180, 0.6);
+        }
+
+        /* Ball colors matching the theme */
+        .ball:nth-child(odd) { background: rgba(255, 209, 181, 0.8); }  /* Warm */
+        .ball:nth-child(even) { background: rgba(255, 190, 147, 0.8); }  /* Cool */
+
+        /* Positioning and movement variations */
+        .ball:nth-child(1) { top: 80%; left: 90%; animation-duration: 45s; transform-origin: 20vw -20vh; }
+        .ball:nth-child(2) { top: 20%; left: 10%; animation-duration: 55s; transform-origin: -15vw 30vh; }
+        .ball:nth-child(3) { top: 10%; left: 40%; animation-duration: 48s; transform-origin: -18vw 5vh; }
+        .ball:nth-child(4) { top: 60%; left: 85%; animation-duration: 35s; transform-origin: -14vw -15vh; }
+        .ball:nth-child(5) { top: 50%; left: 5%; animation-duration: 38s; transform-origin: 5vw 20vh; }
+        .ball:nth-child(6) { top: 30%; left: 30%; animation-duration: 40s; transform-origin: 12vw -10vh; }
+        .ball:nth-child(7) { top: 15%; left: 70%; animation-duration: 50s; transform-origin: -10vw 25vh; }
+        .ball:nth-child(8) { top: 90%; left: 50%; animation-duration: 42s; transform-origin: 8vw -15vh; }
+
+        /* Maintenance message container */
+        .container {
+            max-width: 600px;
+            padding: 30px;
+            background-color: rgba(199, 80, 80, 0.2);
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(199, 80, 80, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
         }
 
         h1 {
-            color: #ffffff;
             font-size: 26px;
             margin-bottom: 15px;
         }
@@ -58,10 +105,12 @@
             margin-bottom: 15px;
         }
 
+        /* Styled status message */
         .status {
-            font-size: 16px;
+            font-size: 26px;
             font-weight: bold;
-            color: #ca300e;
+            color: #ff3489;
+
         }
 
         .footer {
@@ -72,16 +121,31 @@
     </style>
 </head>
 <body>
+
     <!-- Background Glow Effect -->
     <div class="glow-background"></div>
 
+    <!-- Floating Balls -->
+    <div class="background">
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+    </div>
+
+    <!-- Maintenance Message -->
     <div class="container">
-        <h1>Darojax Plex & Overseerr<br>is<br>🚧 Under Maintenance 🚧</h1>
+        <h1>Darojax Plex & Overseerr<br>is<br>🚧 Undergoing Maintenance 🚧</h1>
         <p>The server is undergoing maintenance (probably having dust removed 😆&#8203;) and will be back soon.</p>
         <p class="status">Estimated Downtime: ~30-60 minutes</p>
         <div class="footer">
             <p>Check back later!</p>
         </div>
     </div>
+
 </body>
 </html>

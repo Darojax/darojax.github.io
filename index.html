@@ -5,52 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance | Darojax</title>
     <style>
+        /* Body styling to match homepage */
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #1e1e1e;
-            color: #ffffff;
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(to bottom right, #FF9678, #FF8895);
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            overflow: hidden;
         }
+
+        /* Container for message */
         .container {
             max-width: 600px;
-            padding: 20px;
-            background-color: #292929;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent box */
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(255, 200, 100, 0.3);
+            backdrop-filter: blur(10px);
         }
+
+        /* Vibrating glowing background effect */
+        .glow-background {
+            position: absolute;
+            width: 800px; /* Large glowing effect */
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 240, 180, 0.9) 10%, rgba(255, 200, 100, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            animation: glowPulse 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes glowPulse {
+            0% { transform: scale(1); opacity: 0.9; filter: blur(80px); }
+            100% { transform: scale(1.2); opacity: 0.6; filter: blur(120px); }
+        }
+
         h1 {
             color: #ffcc00;
+            font-size: 26px;
+            margin-bottom: 15px;
         }
+
         p {
             font-size: 18px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         .status {
             font-size: 16px;
             font-weight: bold;
             color: #ff5733;
         }
+
         .footer {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 14px;
-            opacity: 0.7;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
+    <!-- Background Glow Effect -->
+    <div class="glow-background"></div>
+
     <div class="container">
-        <h1>Darojax Plex & Overseerr<br><br>🚧 Under Maintenance 🚧</h1>
+        <h1>Darojax Plex & Overseerr<br>is<br>🚧 Under Maintenance 🚧</h1>
         <p>The server is undergoing maintenance (probably having dust removed 😆) and will be back soon.</p>
         <p class="status">Estimated Downtime: ~30-60 minutes</p>
         <div class="footer">
-            <p>Check back later!</p>
+            <p>Check back later! Thanks for your patience ❤️</p>
         </div>
     </div>
 </body>

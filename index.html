@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance | Darojax</title>
     <style>
-        /* Body styling to match homepage */
+        /* General Page Styling */
         body {
             margin: 0;
             padding: 0;
@@ -22,7 +22,11 @@
             position: relative;
         }
 
-        /* Central pulsating glow effect */
+        h1, h2, h3, h4, h5, h6, p {
+            margin: 0;
+        }
+
+        /* Background Glow */
         .glow-background {
             position: absolute;
             width: 700px;
@@ -42,11 +46,7 @@
             100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; filter: blur(120px); }
         }
 
-        /* Floating balls animation */
-        @keyframes move {
-            100% { transform: translate3d(0, 0, 1px) rotate(360deg); }
-        }
-
+        /* Floating Background Elements */
         .background {
             position: fixed;
             width: 100vw;
@@ -57,7 +57,6 @@
             z-index: -2;
         }
 
-        /* Animated floating balls with soft glow */
         .ball {
             position: absolute;
             width: 15vmin;
@@ -69,11 +68,14 @@
             box-shadow: 0 0 50px rgba(255, 240, 180, 0.6);
         }
 
-        /* Ball colors matching the theme */
-        .ball:nth-child(odd) { background: rgba(255, 209, 181, 0.8); }  /* Warm */
-        .ball:nth-child(even) { background: rgba(255, 190, 147, 0.8); }  /* Cool */
+        @keyframes move {
+            100% { transform: translate3d(0, 0, 1px) rotate(360deg); }
+        }
 
-        /* Positioning and movement variations */
+        /* Ball Colors & Positions */
+        .ball:nth-child(odd) { background: rgba(255, 209, 181, 0.8); }
+        .ball:nth-child(even) { background: rgba(255, 190, 147, 0.8); }
+
         .ball:nth-child(1) { top: 80%; left: 90%; animation-duration: 45s; transform-origin: 20vw -20vh; }
         .ball:nth-child(2) { top: 20%; left: 10%; animation-duration: 55s; transform-origin: -15vw 30vh; }
         .ball:nth-child(3) { top: 10%; left: 40%; animation-duration: 48s; transform-origin: -18vw 5vh; }
@@ -83,7 +85,7 @@
         .ball:nth-child(7) { top: 15%; left: 70%; animation-duration: 50s; transform-origin: -10vw 25vh; }
         .ball:nth-child(8) { top: 90%; left: 50%; animation-duration: 42s; transform-origin: 8vw -15vh; }
 
-        /* Maintenance message container */
+        /* Maintenance Message Container */
         .container {
             max-width: 600px;
             padding: 30px;
@@ -95,50 +97,26 @@
             z-index: 2;
         }
 
-        h1 {
-            font-size: 26px;
-            margin-bottom: 15px;
-        }
+        h1 { font-size: 26px; margin-bottom: 15px; }
+        p { font-size: 18px; margin-bottom: 15px; }
 
-        p {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-
-        /* Styled status message */
-        .status {
-            font-size: 26px;
-            font-weight: bold;
-            color: #ff3c7d;
-            text-shadow: 0px 0px 6px rgba(255, 255, 214, 0.3), 
-                        0px 0px 12px rgba(255, 120, 165, 0.1);
-        }
-
-
-        .footer {
-            margin-top: 15px;
-            font-size: 14px;
-            opacity: 0.8;
-        }
+        .footer { margin-top: 15px; font-size: 14px; opacity: 0.8; }
 
         .logo {
-            vertical-align: middle;  /* Aligns it with text */
+            vertical-align: middle;
             position: relative;
-            top: -7px;  /* Moves the images 10 pixels down */
+            top: -4px;
         }
 
-        @media (max-width: 768px) { /* Target mobile devices */
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
             .glow-background, .ball {
-                animation: none !important;  /* Disable animations */
-                filter: none !important;  /* Remove excessive blur */
-                opacity: 1 !important;  /* Ensure elements don't fade out */
-                box-shadow: none !important; /* Remove shadows */
+                animation: none !important;
+                filter: none !important;
+                opacity: 1 !important;
+                box-shadow: none !important;
             }
-
-            .background {
-                display: none; /* Hide floating balls entirely on mobile */
-            }
-
+            .background { display: none; }
             .glow-background {
                 background: radial-gradient(circle, rgba(255, 240, 180, 0.5) 20%, rgba(255, 200, 100, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
                 width: 100vw;
@@ -147,17 +125,15 @@
                 left: 0;
                 transform: none;
                 border-radius: 0;
-                filter: blur(30px); /* Light blur effect */
+                filter: blur(30px);
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Glow Effect -->
     <div class="glow-background"></div>
 
-    <!-- Floating Balls -->
     <div class="background">
         <span class="ball"></span>
         <span class="ball"></span>
@@ -169,14 +145,108 @@
         <span class="ball"></span>
     </div>
 
-    <!-- Maintenance Message -->
     <div class="container">
-        <h2>Darojax <img src="plex.png" alt="Plex" width="40" class="logo"> Plex and <img src="overseerr.png" alt="Overseerr" width="40" class="logo"> Overseerr</h2>
-        <h1>🚧 SCHEDULED MAINTENANCE 🚧</h1>
-        <p>The server is undergoing maintenance<br>(probably having dust removed 😆&#8203;)<br>but will be back soon.</p>
-        <p class="status">Estimated Downtime: ~30-60 minutes</p>
-        <p>Check back later!<br>Or ping <b>darojax</b> on discord for more info.</p>
+        <h1 id="main-message"></h1>
+        <h2>
+            Darojax <img src="plex.png" alt="Plex" width="30" class="logo"> Plex and 
+            <img src="overseerr.png" alt="Overseerr" width="30" class="logo"> Overseerr
+        </h2>
+        <p id="status-message"></p>
+        
+        <h2 id="reason-message"></h2><br>
+        <div id="downtime-container"></div>
     </div>
 
+    <script src="config.js"></script>
+    <script>
+        function updatePageContent() {
+            const mainMessageEl = document.getElementById("main-message");
+            const reasonMessageEl = document.getElementById("reason-message");
+            const statusMessageEl = document.getElementById("status-message");
+            const downtimeContainerEl = document.getElementById("downtime-container");
+
+            let downtimeContent = ""; // Reset downtime section
+            let reasonText = maintenanceReason.trim() === "" ? "" : maintenanceReason; // Default if empty
+            let estimatedDowntimeText = estimatedDowntime.trim() === "" ? "" : `<h4>Estimated Downtime: ${estimatedDowntime}</h4>`; // Hide if empty
+
+            switch (maintenanceScenario) {
+                case "SCHEDULED_MAINTENANCE":
+                    mainMessageEl.innerHTML = "🚧 SCHEDULED MAINTENANCE 🚧";
+                    reasonMessageEl.innerHTML = `${reasonText}`;
+                    reasonMessageEl.style.color = reasonTextColor; // Apply custom color
+                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                        ? "is temporarily offline due to an unknown issue"
+                        : "is temporarily offline due to";
+                    downtimeContent = `
+                        <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
+                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                    `;
+                    break;
+
+                case "UNSCHEDULED_MAINTENANCE":
+                    mainMessageEl.innerHTML = "🚨 UNSCHEDULED MAINTENANCE 🚨";
+                    reasonMessageEl.innerHTML = `${reasonText}`;
+                    reasonMessageEl.style.color = reasonTextColor;
+                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                        ? "is temporarily offline due to an unknown issue"
+                        : "is temporarily offline due to";
+                    downtimeContent = `
+                        <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
+                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                    `;
+                    break;
+
+                case "UNSCHEDULED_DOWNTIME":
+                    mainMessageEl.innerHTML = "⚠️ UNSCHEDULED DOWNTIME ⚠️";
+                    reasonMessageEl.innerHTML = `${reasonText}`;
+                    reasonMessageEl.style.color = reasonTextColor;
+                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                        ? "is offline due to an unknown issue"
+                        : "is offline due to";
+                    downtimeContent = `
+                        <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
+                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                    `;
+                    break;
+
+                case "SERVER_UNREACHABLE":
+                default:
+                    mainMessageEl.innerHTML = "❌ SERVER UNREACHABLE ❌";
+                    reasonMessageEl.innerHTML = "";
+                    statusMessageEl.innerHTML = "is currently unreachable.<br><br>This could be due to a server restart.<br>Try again in a couple of minutes.<br><br>Ping darojax on discord if no joy.";
+                    downtimeContent = ""; // No downtime display
+                    break;
+            }
+
+            downtimeContainerEl.innerHTML = downtimeContent; // Update downtime section
+        }
+
+        function updateDowntimeDuration() {
+            const now = new Date();
+            const diffMs = now - manualDowntimeStart;
+
+            if (diffMs < 0) {
+                document.getElementById("downtime-duration").textContent = "Error: Future time detected!";
+                return;
+            }
+
+            const diffSeconds = Math.floor(diffMs / 1000) % 60;
+            const diffMinutes = Math.floor(diffMs / 60000) % 60;
+            const diffHours = Math.floor(diffMs / 3600000) % 24;
+            const diffDays = Math.floor(diffMs / (3600000 * 24));
+
+            let downtimeMessage = `${diffDays > 0 ? diffDays + "d " : ""}${diffHours > 0 ? diffHours + "h " : ""}${diffMinutes > 0 ? diffMinutes + "m " : ""}${diffSeconds}s`;
+            document.getElementById("downtime-duration").textContent = downtimeMessage;
+        }
+
+        // Initialize page content and update downtime every second if needed
+        updatePageContent();
+        setInterval(() => {
+            if (document.getElementById("downtime-duration")) {
+                updateDowntimeDuration();
+            }
+        }, 1000);
+
+    </script>
 </body>
 </html>

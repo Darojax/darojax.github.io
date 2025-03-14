@@ -153,7 +153,7 @@
         </h2>
         <p id="status-message"></p>
         
-        <h2 id="reason-message"></h2><br>
+        <h2 id="reason-message"></h2>
         <div id="downtime-container"></div>
     </div>
 
@@ -166,59 +166,68 @@
             const downtimeContainerEl = document.getElementById("downtime-container");
 
             let downtimeContent = ""; // Reset downtime section
-            let reasonText = maintenanceReason.trim() === "" ? "" : maintenanceReason; // Default if empty
-            let estimatedDowntimeText = estimatedDowntime.trim() === "" ? "" : `<h4>Estimated Downtime: ${estimatedDowntime}</h4>`; // Hide if empty
+            let reasonText = maintenanceReason.trim();
+            let predictedDowntimeText = predictedDowntime.trim() === "" ? "" : `<h4>Predicted Downtime: ${predictedDowntime}</h4>`; // Hide if empty
+
+            // Hide reason-message if empty, otherwise add a line break after it
+            if (reasonText === "") {
+                reasonMessageEl.style.display = "none";
+            } else {
+                reasonMessageEl.style.display = "block";
+                reasonMessageEl.innerHTML = reasonText + "<br><br>"; // Add a line break after reason
+                reasonMessageEl.style.color = reasonTextColor; // Apply custom color
+            }
 
             switch (maintenanceScenario) {
                 case "SCHEDULED_MAINTENANCE":
                     mainMessageEl.innerHTML = "🚧 SCHEDULED MAINTENANCE 🚧";
-                    reasonMessageEl.innerHTML = `${reasonText}`;
-                    reasonMessageEl.style.color = reasonTextColor; // Apply custom color
-                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                    statusMessageEl.innerHTML = reasonText === ""
                         ? "is temporarily offline due to an unknown issue"
                         : "is temporarily offline due to";
                     downtimeContent = `
                         <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
-                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                        ${predictedDowntimeText} <!-- Only added if predictedDowntime is not empty -->
                     `;
                     break;
 
                 case "UNSCHEDULED_MAINTENANCE":
                     mainMessageEl.innerHTML = "🚨 UNSCHEDULED MAINTENANCE 🚨";
-                    reasonMessageEl.innerHTML = `${reasonText}`;
-                    reasonMessageEl.style.color = reasonTextColor;
-                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                    statusMessageEl.innerHTML = reasonText === ""
                         ? "is temporarily offline due to an unknown issue"
                         : "is temporarily offline due to";
                     downtimeContent = `
                         <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
-                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                        ${predictedDowntimeText} <!-- Only added if predictedDowntime is not empty -->
                     `;
                     break;
 
                 case "UNSCHEDULED_DOWNTIME":
                     mainMessageEl.innerHTML = "⚠️ UNSCHEDULED DOWNTIME ⚠️";
-                    reasonMessageEl.innerHTML = `${reasonText}`;
-                    reasonMessageEl.style.color = reasonTextColor;
-                    statusMessageEl.innerHTML = maintenanceReason.trim() === "" 
+                    statusMessageEl.innerHTML = reasonText === ""
                         ? "is offline due to an unknown issue"
                         : "is offline due to";
                     downtimeContent = `
                         <h1>Server Downtime: <b><span id="downtime-duration">Calculating...</span></b></h1>
-                        ${estimatedDowntimeText} <!-- Only added if estimatedDowntime is not empty -->
+                        ${predictedDowntimeText} <!-- Only added if predictedDowntime is not empty -->
                     `;
                     break;
 
                 case "SERVER_UNREACHABLE":
                 default:
                     mainMessageEl.innerHTML = "❌ SERVER UNREACHABLE ❌";
-                    reasonMessageEl.innerHTML = "";
-                    statusMessageEl.innerHTML = "is currently unreachable.<br><br>This could be due to a server restart.<br>Try again in a couple of minutes.<br><br>Ping darojax on discord if no joy.";
+                    reasonMessageEl.style.display = "none"; // Ensure it's hidden
+                    statusMessageEl.innerHTML = "is currently unreachable.<br><br>This could be due to a server restart.<br>Try again in a couple of minutes.<br><br>Ping darojax on Discord if the issue does not resolve itself.";
                     downtimeContent = ""; // No downtime display
                     break;
             }
 
-            downtimeContainerEl.innerHTML = downtimeContent; // Update downtime section
+            // **Hide downtime container if there's no content**
+            if (downtimeContent.trim() === "") {
+                downtimeContainerEl.style.display = "none";
+            } else {
+                downtimeContainerEl.style.display = "block";
+                downtimeContainerEl.innerHTML = downtimeContent; // Update downtime section
+            }
         }
 
         function updateDowntimeDuration() {

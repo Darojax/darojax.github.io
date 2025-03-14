@@ -10,8 +10,8 @@ const maintenanceScenarioNumber = 1;
 // Downtime start time in UTC: "YYYY-MM-DD HH:MM"
 const manualDowntimeStartString = "2025-03-14 17:17";
 
-// Estimated downtime
-const estimatedDowntime = "~30-60 minutes";
+// Predicted downtime
+const predictedDowntime = "~30-60 minutes";
 
 // Reason for maintenance
 const maintenanceReason = "Dust removal";

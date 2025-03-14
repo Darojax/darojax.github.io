@@ -110,12 +110,19 @@
             font-size: 26px;
             font-weight: bold;
             color: #ff3489;
+
         }
 
         .footer {
             margin-top: 15px;
             font-size: 14px;
             opacity: 0.8;
+        }
+
+        .logo {
+            vertical-align: middle;  /* Aligns it with text */
+            position: relative;
+            top: -7px;  /* Moves the images 10 pixels down */
         }
     </style>
 </head>
@@ -132,62 +139,23 @@
         <span class="ball"></span>
         <span class="ball"></span>
         <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
     </div>
 
     <!-- Maintenance Message -->
     <div class="container">
-        <h1>Darojax Plex & Overseerr<br>🚧 Scheduled Maintenance 🚧</h1>
-        <p>The server is undergoing maintenance<br>(probably having dust removed 😆&#8203;)<br>and will be back soon.</p>
-        <p class="status">Estimated Downtime:<br><span id="downtime">Checking...</span></p>
-        <p>Check back later!</p>
+        <h2>Darojax 
+            <img src="https://img.icons8.com/fluent/600/plex.png" alt="Plex" width="40" class="logo"> 
+            Plex and 
+            <img src="https://user-images.githubusercontent.com/1066576/125193232-b41d8900-e28e-11eb-801b-3b643f672536.png" alt="Overseerr" width="40" class="logo"> 
+            Overseerr
+        </h2>
+        <h1>🚧 SCHEDULED MAINTENANCE 🚧</h1>
+        <p>The server is undergoing maintenance<br>(probably having dust removed 😆&#8203;)<br>but will be back soon.</p>
+        <p class="status">Estimated Downtime: ~30-60 minutes</p>
+        <p>Check back later!<br>Or ping <b>darojax</b> on discord for more info.</p>
     </div>
-
-    <script>
-        // Replace this with your actual server URL
-        const SERVER_URL = "https://plex.darojax.net"; 
-    
-        let downSince = null; // Stores when the server first went down
-    
-        async function checkServerStatus() {
-            try {
-                const response = await fetch(SERVER_URL, { mode: "no-cors" });
-    
-                // If request doesn't throw an error, the server is up
-                if (response.ok || response.status === 200) {
-                    document.getElementById("downtime").textContent = "Server is up.";
-                    downSince = null; // Reset downtime
-                    return;
-                }
-            } catch (error) {
-                // Server is down
-                if (!downSince) {
-                    downSince = new Date(); // Set downtime start
-                }
-    
-                // Calculate downtime duration
-                const now = new Date();
-                const diffMs = now - downSince;
-                const diffMinutes = Math.floor(diffMs / 60000);
-                const diffHours = Math.floor(diffMinutes / 60);
-                const diffDays = Math.floor(diffHours / 24);
-    
-                let downtimeMessage = "Down for a few moments";
-                if (diffDays > 0) {
-                    downtimeMessage = `Down for ~${diffDays} days`;
-                } else if (diffHours > 0) {
-                    downtimeMessage = `Down for ~${diffHours} hours`;
-                } else {
-                    downtimeMessage = `Down for ~${diffMinutes} minutes`;
-                }
-    
-                document.getElementById("downtime").textContent = downtimeMessage;
-            }
-        }
-    
-        // Check every 5 minutes
-        setInterval(checkServerStatus, 300000);
-        checkServerStatus(); // Run immediately on page load
-    </script>
 
 </body>
 </html>

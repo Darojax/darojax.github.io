@@ -110,7 +110,6 @@
             font-size: 26px;
             font-weight: bold;
             color: #ff3489;
-
         }
 
         .footer {
@@ -133,19 +132,62 @@
         <span class="ball"></span>
         <span class="ball"></span>
         <span class="ball"></span>
-        <span class="ball"></span>
-        <span class="ball"></span>
     </div>
 
     <!-- Maintenance Message -->
     <div class="container">
-        <h1>Darojax Plex & Overseerr<br>is<br>🚧 Undergoing Maintenance 🚧</h1>
-        <p>The server is undergoing maintenance (probably having dust removed 😆&#8203;) and will be back soon.</p>
-        <p class="status">Estimated Downtime: ~30-60 minutes</p>
-        <div class="footer">
-            <p>Check back later!</p>
-        </div>
+        <h1>Darojax Plex & Overseerr<br>🚧 Scheduled Maintenance 🚧</h1>
+        <p>The server is undergoing maintenance<br>(probably having dust removed 😆&#8203;)<br>and will be back soon.</p>
+        <p class="status">Estimated Downtime:<br><span id="downtime">Checking...</span></p>
+        <p>Check back later!</p>
     </div>
+
+    <script>
+        // Replace this with your actual server URL
+        const SERVER_URL = "https://plex.darojax.net"; 
+    
+        let downSince = null; // Stores when the server first went down
+    
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(SERVER_URL, { mode: "no-cors" });
+    
+                // If request doesn't throw an error, the server is up
+                if (response.ok || response.status === 200) {
+                    document.getElementById("downtime").textContent = "Server is up.";
+                    downSince = null; // Reset downtime
+                    return;
+                }
+            } catch (error) {
+                // Server is down
+                if (!downSince) {
+                    downSince = new Date(); // Set downtime start
+                }
+    
+                // Calculate downtime duration
+                const now = new Date();
+                const diffMs = now - downSince;
+                const diffMinutes = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMinutes / 60);
+                const diffDays = Math.floor(diffHours / 24);
+    
+                let downtimeMessage = "Down for a few moments";
+                if (diffDays > 0) {
+                    downtimeMessage = `Down for ~${diffDays} days`;
+                } else if (diffHours > 0) {
+                    downtimeMessage = `Down for ~${diffHours} hours`;
+                } else {
+                    downtimeMessage = `Down for ~${diffMinutes} minutes`;
+                }
+    
+                document.getElementById("downtime").textContent = downtimeMessage;
+            }
+        }
+    
+        // Check every 5 minutes
+        setInterval(checkServerStatus, 300000);
+        checkServerStatus(); // Run immediately on page load
+    </script>
 
 </body>
 </html>
